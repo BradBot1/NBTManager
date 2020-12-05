@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>BB1</groupId>
   <artifactId>NBTManager</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>CraftBukkitNBTManager</name>
   <description>A simple way to use NBT with CraftBukkit</description>
   
@@ -25,11 +25,6 @@
  </repositories>
  
  <dependencies>
-  <dependency>
-   <groupId>com.googlecode.json-simple</groupId>
-   <artifactId>json-simple</artifactId>
-   <version>1.1.1</version>
-  </dependency>
   <dependency>
    <groupId>org.spigotmc</groupId>
    <artifactId>spigot-api</artifactId>
