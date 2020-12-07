@@ -5,11 +5,17 @@ import java.util.Set;
 
 import org.bukkit.inventory.ItemStack;
 
+import com.bb1.defaults.NBTTagByte;
+import com.bb1.defaults.NBTTagByteArray;
 import com.bb1.defaults.NBTTagCompound;
 import com.bb1.defaults.NBTTagDouble;
 import com.bb1.defaults.NBTTagFloat;
 import com.bb1.defaults.NBTTagInteger;
+import com.bb1.defaults.NBTTagIntegerArray;
+import com.bb1.defaults.NBTTagLongArray;
+import com.bb1.defaults.NBTTagShort;
 import com.bb1.defaults.NBTTagString;
+import com.bb1.defaults.NBTTagUnknown;
 import com.bb1.enums.NBTType;
 import com.bb1.interfaces.NBTTag;
 import com.bb1.interfaces.NBTTags;
@@ -57,7 +63,13 @@ public class NBTManager {
             if (NBTCompoundTag==null) NBTCompoundTag = classNMSNBTTagCompound.newInstance();
             
             for (NBTTag<?> nbtTag : nbtTags.getTags()) {
-				Method set = classNMSNBTTagCompound.getMethod("set"+nbtTag.getNBTType().getName(), String.class, nbtTag.getNBTType().getType());
+            	if (nbtTag.getNBTType()==NBTType.UNKNOWN) continue;
+            	Method set;
+            	if (nbtTag.getNBTType()==NBTType.COMPOUND || nbtTag.getNBTType()==NBTType.LONGARRAY) {
+            		set = classNMSNBTTagCompound.getMethod("set", String.class, nbtTag.getNBTType().getType());
+            	} else {
+            		set = classNMSNBTTagCompound.getMethod("set"+nbtTag.getNBTType().getName(), String.class, nbtTag.getNBTType().getType());
+            	}
 				set.setAccessible(true);
 				set.invoke(NBTCompoundTag, nbtTag.getTagKey(), nbtTag.getTagValue());
 			}
@@ -102,8 +114,20 @@ public class NBTManager {
 						tag = new NBTTagFloat(key.toString(), (Float) value);
 					} else if (value instanceof Double) {
 						tag = new NBTTagDouble(key.toString(), (Double) value);
-					} else {
+					} else if (value instanceof Short) {
+						tag = new NBTTagShort(key.toString(), (Short) value);
+					} else if (value instanceof Byte) {
+						tag = new NBTTagByte(key.toString(), (Byte) value);
+					} else if (value instanceof Byte[]) {
+						tag = new NBTTagByteArray(key.toString(), (Byte[]) value);
+					} else if (value instanceof Integer[]) {
+						tag = new NBTTagIntegerArray(key.toString(), (Integer[]) value);
+					} else if (value instanceof Long[]) {
+						tag = new NBTTagLongArray(key.toString(), (Long[]) value);
+					} else if (value instanceof String) {
 						tag = new NBTTagString(key.toString(), value.toString());
+					} else {
+						tag = new NBTTagUnknown(key.toString(), value);
 					}
 					tags.addTag(tag);
 				}

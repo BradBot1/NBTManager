@@ -5,7 +5,7 @@ import com.bb1.interfaces.NBTTag;
 
 public class NBTTagInteger implements NBTTag<Integer> {
 
-	private static final long serialVersionUID = 924794517068514539L;
+	private static final long serialVersionUID = -6032600454918902587L;
 
 	private final String key;
 	private Integer value;

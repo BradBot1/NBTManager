@@ -3,14 +3,14 @@ package com.bb1.defaults;
 import com.bb1.enums.NBTType;
 import com.bb1.interfaces.NBTTag;
 
-public class NBTTagFloat implements NBTTag<Float> {
-	
-	private static final long serialVersionUID = -193487230636041469L;
-	
-	private final String key;
-	private Float value;
+public class NBTTagByte implements NBTTag<Byte> {
 
-	public NBTTagFloat(String key, Float value) {
+	private static final long serialVersionUID = -5988330344814968408L;
+
+	private final String key;
+	private Byte value;
+
+	public NBTTagByte(String key, Byte value) {
 		this.key = key;
 		this.value = value;
 	}
@@ -21,18 +21,18 @@ public class NBTTagFloat implements NBTTag<Float> {
 	}
 
 	@Override
-	public Float getTagValue() {
+	public Byte getTagValue() {
 		return this.value;
 	}
 
 	@Override
 	public String getTagValueAsString() {
-		return Float.toString(this.value);
+		return Byte.toString(this.value);
 	}
 
 	@Override
 	public NBTType getNBTType() {
-		return NBTType.FLOAT;
+		return NBTType.BYTE;
 	}
 
 }

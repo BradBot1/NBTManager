@@ -9,7 +9,7 @@ import com.google.common.collect.Sets;
 
 public class NBTTagCompound implements NBTTags, NBTTag<Object> {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8112620672852745399L;
 
 	private final Set<NBTTag<?>> tags = Sets.newConcurrentHashSet();
 

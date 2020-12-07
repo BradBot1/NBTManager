@@ -4,9 +4,9 @@ import com.bb1.enums.NBTType;
 import com.bb1.interfaces.NBTTag;
 
 public class NBTTagLong implements NBTTag<Long> {
-
-	private static final long serialVersionUID = 924794517068514539L;
-
+	
+	private static final long serialVersionUID = -8913284763366522675L;
+	
 	private final String key;
 	private Long value;
 

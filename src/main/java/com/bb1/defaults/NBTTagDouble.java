@@ -5,7 +5,7 @@ import com.bb1.interfaces.NBTTag;
 
 public class NBTTagDouble implements NBTTag<Double> {
 
-	private static final long serialVersionUID = 924794517068514539L;
+	private static final long serialVersionUID = -4103208056790709738L;
 
 	private final String key;
 	private Double value;

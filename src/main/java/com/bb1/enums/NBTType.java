@@ -3,12 +3,19 @@ package com.bb1.enums;
 import lombok.Getter;
 
 public enum NBTType {
-	COMPOUND(null, ""),
+	COMPOUND(null, "Compound"),
 	STRING(String.class, "String"),
 	INTEGER(int.class, "Int"),
+	INTEGERARRAY(int[].class, "IntArray"),
 	FLOAT(float.class, "Float"),
 	DOUBLE(double.class, "Double"),
 	LONG(long.class, "Long"),
+	LONGARRAY(long[].class, "LongArray"),
+	SHORT(short.class, "Short"),
+	BYTE(byte.class, "Byte"),
+	BYTEARRAY(byte[].class, "ByteArray"),
+	BOOLEAN(boolean.class, "Boolean"),
+	UNKNOWN(null, ""),
 	;
 	
 	private final @Getter Class<?> type;
