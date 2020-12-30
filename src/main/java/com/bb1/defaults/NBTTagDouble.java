@@ -1,38 +1,24 @@
 package com.bb1.defaults;
 
-import com.bb1.enums.NBTType;
-import com.bb1.interfaces.NBTTag;
+import com.bb1.NBTTag;
 
-public class NBTTagDouble implements NBTTag<Double> {
+import lombok.SneakyThrows;
 
-	private static final long serialVersionUID = -4103208056790709738L;
-
-	private final String key;
-	private Double value;
+public class NBTTagDouble extends NBTTag<Double> {
 
 	public NBTTagDouble(String key, Double value) {
-		this.key = key;
-		this.value = value;
+		super(key, value);
 	}
 
 	@Override
-	public String getTagKey() {
-		return this.key;
+	public String getName() {
+		return "Double";
 	}
 
+	@SneakyThrows
 	@Override
-	public Double getTagValue() {
-		return this.value;
+	public Object addToNMSTag(Object nmsTag) {
+		return nmsTag.getClass().getMethod("setDouble", String.class, double.class).invoke(nmsTag, getKey(), getValue());
 	}
-
-	@Override
-	public String getTagValueAsString() {
-		return Double.toString(this.value);
-	}
-
-	@Override
-	public NBTType getNBTType() {
-		return NBTType.DOUBLE;
-	}
-
+	
 }

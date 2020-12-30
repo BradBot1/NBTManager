@@ -1,94 +1,123 @@
 package com.bb1.defaults;
 
-import java.util.Set;
+import com.bb1.NBTTag;
+import com.bb1.NMS;
 
-import com.bb1.enums.NBTType;
-import com.bb1.interfaces.NBTTag;
-import com.bb1.interfaces.NBTTags;
-import com.google.common.collect.Sets;
+import lombok.SneakyThrows;
 
-public class NBTTagCompound implements NBTTags, NBTTag<Object> {
-
-	private static final long serialVersionUID = -8112620672852745399L;
-
-	private final Set<NBTTag<?>> tags = Sets.newConcurrentHashSet();
-
-	private final String key;
-	private Object value;
-
-	public NBTTagCompound(String key, Object value) {
-		this.key = key;
-		this.value = value;
+public class NBTTagCompound {
+	
+	private static final Class<?> NBTCOMPOUND = NMS.getNMSClass("NBTTagCompound");
+	
+	protected Object tag;
+	
+	@SneakyThrows
+	public NBTTagCompound(Object tag) {
+		if (tag==null || !tag.getClass().equals(NBTCOMPOUND)) {
+			this.tag = NBTCOMPOUND.newInstance();
+		} else {
+			this.tag = tag;
+		}
 	}
 	
-	public NBTTagCompound() {
-		this.key = "";
-		this.value = this.tags;
+	protected void setTag(NBTTag<?> tag) {
+		this.tag = tag.addToNMSTag(this.tag);
 	}
-
-	@Override
-	public Set<NBTTag<?>> getTags() {
-		return this.tags;
+	
+	public void setString(String key, String value) {
+		setTag(new NBTTagString(key, value));
 	}
-
-	@Override
-	public void addTag(NBTTag<?> nbtTag) {
-		for (NBTTag<?> nbtTag2 : this.tags) {
-			if (nbtTag2.getTagKey().equals(nbtTag.getTagKey())) {
-				this.tags.remove(nbtTag2);
-			}
+	
+	public void setInt(String key, int value) {
+		setTag(new NBTTagInteger(key, value));
+	}
+	
+	public void setLong(String key, long value) {
+		setTag(new NBTTagLong(key, value));
+	}
+	
+	public void setDouble(String key, double value) {
+		setTag(new NBTTagDouble(key, value));
+	}
+	
+	public void setShort(String key, short value) {
+		setTag(new NBTTagShort(key, value));
+	}
+	
+	public void setByte(String key, byte value) {
+		setTag(new NBTTagByte(key, value));
+	}
+	
+	public void setBoolean(String key, boolean value) {
+		setTag(new NBTTagBoolean(key, value));
+	}
+	
+	@SneakyThrows
+	public NBTTag<String> getString(String key) {
+		try {
+			return new NBTTagString(key, (String) NBTCOMPOUND.getMethod("getString", String.class).invoke(tag, key));
+		} catch (Exception e) {
+			return new NBTTagString(key, null);
 		}
-		this.tags.add(nbtTag);
 	}
-
-	@Override
-	public void addTag(String key, String value) {
-		for (NBTTag<?> nbtTag2 : this.tags) {
-			if (nbtTag2.getTagKey().equals(key)) {
-				this.tags.remove(nbtTag2);
-			}
+	
+	@SneakyThrows
+	public NBTTag<Integer> getInt(String key) {
+		try {
+			return new NBTTagInteger(key, (int) NBTCOMPOUND.getMethod("getInt", String.class).invoke(tag, key));
+		} catch (Exception e) {
+			return new NBTTagInteger(key, null);
 		}
-		this.tags.add(new NBTTagString(key, value));
 	}
-
-	@Override
-	public NBTTag<?> getTag(String key) {
-		for (NBTTag<?> nbtTag : this.tags) {
-			if (nbtTag.getTagKey().equals(key)) {
-				return nbtTag;
-			}
+	
+	@SneakyThrows
+	public NBTTag<Long> getLong(String key) {
+		try {
+			return new NBTTagLong(key, (long) NBTCOMPOUND.getMethod("getLong", String.class).invoke(tag, key));
+		} catch (Exception e) {
+			return new NBTTagLong(key, null);
 		}
-		return new NBTTagString(key, "");
 	}
-
-	@Override
-	public NBTTag<?> getTagOrDefault(String key, NBTTag<?> defaultTag) {
-		for (NBTTag<?> nbtTag : this.tags) {
-			if (nbtTag.getTagKey().equals(key)) {
-				return nbtTag;
-			}
+	
+	@SneakyThrows
+	public NBTTag<Double> getDouble(String key) {
+		try {
+			return new NBTTagDouble(key, (double) NBTCOMPOUND.getMethod("getDouble", String.class).invoke(tag, key));
+		} catch (Exception e) {
+			return new NBTTagDouble(key, null);
 		}
-		return defaultTag;
 	}
-
-	@Override
-	public String getTagKey() {
-		return this.key;
+	
+	@SneakyThrows
+	public NBTTag<Short> getShort(String key) {
+		try {
+			return new NBTTagShort(key, (short) NBTCOMPOUND.getMethod("getShort", String.class).invoke(tag, key));
+		} catch (Exception e) {
+			return new NBTTagShort(key, null);
+		}
 	}
-
-	@Override
-	public Object getTagValue() {
-		return this.value;
+	
+	@SneakyThrows
+	public NBTTag<Byte> getByte(String key) {
+		try {
+			return new NBTTagByte(key, (byte) NBTCOMPOUND.getMethod("getByte", String.class).invoke(tag, key));
+		} catch (Exception e) {
+			return new NBTTagByte(key, null);
+		}
 	}
-
-	@Override
-	public String getTagValueAsString() {
-		return this.value.toString();
+	
+	@SneakyThrows
+	public NBTTag<Boolean> getBoolean(String key) {
+		try {
+			return new NBTTagBoolean(key, (boolean) NBTCOMPOUND.getMethod("getBoolean", String.class).invoke(tag, key));
+		} catch (Exception e) {
+			return new NBTTagBoolean(key, null);
+		}
 	}
-
-	@Override
-	public NBTType getNBTType() {
-		return NBTType.COMPOUND;
+	
+	@SneakyThrows
+	public Object getAsNMSTag() {
+		return (this.tag==null) ? this.tag = NBTCOMPOUND.newInstance() : this.tag;
 	}
-
+	
 }

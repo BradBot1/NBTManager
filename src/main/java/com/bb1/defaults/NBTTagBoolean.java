@@ -1,38 +1,24 @@
 package com.bb1.defaults;
 
-import com.bb1.enums.NBTType;
-import com.bb1.interfaces.NBTTag;
+import com.bb1.NBTTag;
 
-public class NBTTagBoolean implements NBTTag<Boolean> {
+import lombok.SneakyThrows;
 
-	private static final long serialVersionUID = -227032451606029539L;
-
-	private final String key;
-	private Boolean value;
+public class NBTTagBoolean extends NBTTag<Boolean> {
 
 	public NBTTagBoolean(String key, Boolean value) {
-		this.key = key;
-		this.value = value;
+		super(key, value);
 	}
 
 	@Override
-	public String getTagKey() {
-		return this.key;
+	public String getName() {
+		return "Boolean";
 	}
 
+	@SneakyThrows
 	@Override
-	public Boolean getTagValue() {
-		return this.value;
+	public Object addToNMSTag(Object nmsTag) {
+		return nmsTag.getClass().getMethod("setBoolean", String.class, boolean.class).invoke(nmsTag, getKey(), getValue());
 	}
-
-	@Override
-	public String getTagValueAsString() {
-		return Boolean.toString(this.value);
-	}
-
-	@Override
-	public NBTType getNBTType() {
-		return NBTType.BOOLEAN;
-	}
-
+	
 }

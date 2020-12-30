@@ -1,38 +1,24 @@
 package com.bb1.defaults;
 
-import com.bb1.enums.NBTType;
-import com.bb1.interfaces.NBTTag;
+import com.bb1.NBTTag;
 
-public class NBTTagShort implements NBTTag<Short> {
+import lombok.SneakyThrows;
 
-	private static final long serialVersionUID = -6989030022210816038L;
-	
-	private final String key;
-	private Short value;
+public class NBTTagShort extends NBTTag<Short> {
 
 	public NBTTagShort(String key, Short value) {
-		this.key = key;
-		this.value = value;
+		super(key, value);
 	}
 
 	@Override
-	public String getTagKey() {
-		return this.key;
+	public String getName() {
+		return "Short";
 	}
 
+	@SneakyThrows
 	@Override
-	public Short getTagValue() {
-		return this.value;
+	public Object addToNMSTag(Object nmsTag) {
+		return nmsTag.getClass().getMethod("setShort", String.class, short.class).invoke(nmsTag, getKey(), getValue());
 	}
-
-	@Override
-	public String getTagValueAsString() {
-		return Short.toString(this.value);
-	}
-
-	@Override
-	public NBTType getNBTType() {
-		return NBTType.SHORT;
-	}
-
+	
 }
