@@ -1,6 +1,7 @@
 package com.bb1.defaults;
 
 import com.bb1.NBTTag;
+import com.bb1.NMS;
 
 import lombok.SneakyThrows;
 
@@ -17,8 +18,8 @@ public class NBTTagString extends NBTTag<String> {
 
 	@SneakyThrows
 	@Override
-	public Object addToNMSTag(Object nmsTag) {
-		return nmsTag.getClass().getMethod("setString", String.class, String.class).invoke(nmsTag, getKey(), getValue());
+	public void addToNMSTag(Object nmsTag) {
+		NMS.getNMSClass("NBTTagCompound").getMethod("setString", String.class, String.class).invoke(nmsTag, getKey(), getValue());
 	}
 	
 }

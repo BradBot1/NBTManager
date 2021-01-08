@@ -9,7 +9,7 @@ public class NBTTagCompound {
 	
 	private static final Class<?> NBTCOMPOUND = NMS.getNMSClass("NBTTagCompound");
 	
-	protected Object tag;
+	protected final Object tag;
 	
 	@SneakyThrows
 	public NBTTagCompound(Object tag) {
@@ -21,7 +21,7 @@ public class NBTTagCompound {
 	}
 	
 	protected void setTag(NBTTag<?> tag) {
-		this.tag = tag.addToNMSTag(this.tag);
+		tag.addToNMSTag(this.tag);
 	}
 	
 	public void setString(String key, String value) {
@@ -117,7 +117,7 @@ public class NBTTagCompound {
 	
 	@SneakyThrows
 	public Object getAsNMSTag() {
-		return (this.tag==null) ? this.tag = NBTCOMPOUND.newInstance() : this.tag;
+		return this.tag;
 	}
 	
 }

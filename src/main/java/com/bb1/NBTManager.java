@@ -41,6 +41,7 @@ public class NBTManager {
 				return itemStack;
 			}
 		} catch (Exception ignore) {
+			ignore.printStackTrace();
 			return itemStack;
 		}
 	}

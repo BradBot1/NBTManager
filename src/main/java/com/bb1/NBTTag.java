@@ -31,7 +31,6 @@ public abstract class NBTTag<E> {
 	/**
 	 * Adds this tag to the given compound tag
 	 * @param nmsTag The compound tag this will be added to
-	 * @return The modified compound tag
 	 */
-	public abstract Object addToNMSTag(Object nmsTag);
+	public abstract void addToNMSTag(Object nmsTag);
 }
